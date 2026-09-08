@@ -1,14 +1,12 @@
 # Holiday PTO Calendar
 
-A month-at-a-time calendar for your paid time off. This copy starts empty. Your days stay in your browser on your computer.
+A month-at-a-time calendar for your paid time off. This copy starts empty. Your days stay in your own browser.
 
-## Run it
+## Open it
 
-1. Install Node.js (LTS) from https://nodejs.org
-2. Open a terminal in this folder
-3. Run `npm install`
-4. Run `npm run dev`
-5. Open http://localhost:5173/
+https://bonnieann-k.github.io/holiday-calendar-template/
+
+Bookmark that link. You do not need to install anything.
 
 ## First-time setup
 
