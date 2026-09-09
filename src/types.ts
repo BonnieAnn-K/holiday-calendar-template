@@ -18,6 +18,7 @@ export type Settings = {
   startDate: string;
   startingBalance: number;
   hoursPerMonth: number;
+  accrualTierId: string;
   themeId: string;
   fontId: string;
   types: TimeOffType[];

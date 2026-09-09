@@ -1,4 +1,5 @@
 import { DEFAULT_STATE } from "../data/seed";
+import { getAccrualTier, inferAccrualTier, monthlyHoursForAnnual } from "./accrual";
 import { getFont, getTheme } from "./appearance";
 import type { AppState, Settings, TimeOffEntry } from "../types";
 
@@ -25,6 +26,11 @@ export function normalizeSettings(settings: Partial<Settings> | undefined): Sett
     themeId: getTheme(settings?.themeId ?? DEFAULT_STATE.settings.themeId).id,
     fontId: getFont(settings?.fontId ?? DEFAULT_STATE.settings.fontId).id,
   };
+  const tier = settings?.accrualTierId
+    ? getAccrualTier(settings.accrualTierId)
+    : inferAccrualTier(merged.hoursPerMonth);
+  merged.accrualTierId = tier.id;
+  merged.hoursPerMonth = monthlyHoursForAnnual(tier.annualHours);
   return applyThemeColors(merged);
 }
 

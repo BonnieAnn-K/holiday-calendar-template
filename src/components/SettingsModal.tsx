@@ -1,4 +1,9 @@
 import { useEffect, useRef, useState } from "react";
+import {
+  ACCRUAL_TIERS,
+  formatMonthlyHours,
+  monthlyHoursForAnnual,
+} from "../lib/accrual";
 import { FONTS, THEMES, applyAppearance, getTheme } from "../lib/appearance";
 import { parseTimeOffFile } from "../lib/importFile";
 import type { Settings, TimeOffEntry } from "../types";
@@ -121,25 +126,41 @@ export function SettingsModal({
               }
             />
           </div>
-          <div className="field">
-            <label htmlFor="hours-month">Monthly Accrual</label>
-            <input
-              id="hours-month"
-              type="number"
-              min="0"
-              step="1"
-              value={draft.hoursPerMonth}
-              onChange={(event) =>
-                setDraft({
-                  ...draft,
-                  hoursPerMonth: Math.max(
-                    0,
-                    Math.round(Number(event.target.value) || 0),
-                  ),
-                })
-              }
-            />
+        </div>
+
+        <div className="field wide" style={{ marginTop: 18 }}>
+          <label>Accrual rate</label>
+          <div className="choice-grid">
+            {ACCRUAL_TIERS.map((tier) => (
+              <button
+                key={tier.id}
+                type="button"
+                className={
+                  draft.accrualTierId === tier.id ? "choice selected" : "choice"
+                }
+                onClick={() =>
+                  setDraft({
+                    ...draft,
+                    accrualTierId: tier.id,
+                    hoursPerMonth: monthlyHoursForAnnual(tier.annualHours),
+                  })
+                }
+              >
+                <strong>
+                  {tier.annualHours} hours · {tier.days} days
+                </strong>
+                <small>{tier.name}</small>
+                <small>
+                  {formatMonthlyHours(tier.annualHours)} hours each month
+                </small>
+              </button>
+            ))}
           </div>
+          <p className="meta" style={{ marginTop: 10 }}>
+            You move to the next rate in the month after your 5th anniversary
+            (160 → 200 hours) and after your 10th (200 → 240). Accrual is earned
+            monthly, not all at once at the start of the year.
+          </p>
         </div>
 
         <div className="field wide" style={{ marginTop: 18 }}>
@@ -166,19 +187,24 @@ export function SettingsModal({
 
         <div className="field wide" style={{ marginTop: 16 }}>
           <label>Font</label>
-          <div className="choice-grid">
+          <div className="choice-grid font-choice-grid">
             {FONTS.map((font) => (
               <button
                 key={font.id}
                 type="button"
-                className={draft.fontId === font.id ? "choice selected" : "choice"}
+                className={
+                  draft.fontId === font.id
+                    ? "choice font-choice selected"
+                    : "choice font-choice"
+                }
                 onClick={() => setDraft({ ...draft, fontId: font.id })}
               >
-                <span className="font-preview" style={{ fontFamily: font.previewFamily }}>
-                  246
+                <span
+                  className="font-preview"
+                  style={{ fontFamily: font.previewFamily }}
+                >
+                  246 - {font.name}
                 </span>
-                <strong>{font.name}</strong>
-                <small>{font.note}</small>
               </button>
             ))}
           </div>

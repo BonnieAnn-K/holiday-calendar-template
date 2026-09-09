@@ -977,11 +977,24 @@
   flex: 1;
 }
 
+.font-choice-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.choice.font-choice {
+  padding: 6px 8px;
+  gap: 0;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
 .font-preview {
-  font-size: 1.55rem;
+  font-size: 1.05rem;
   font-weight: 700;
-  line-height: 1.1;
-  letter-spacing: -0.03em;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
 }
 
 .type-row {

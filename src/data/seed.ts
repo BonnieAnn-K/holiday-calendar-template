@@ -35,6 +35,7 @@ export const DEFAULT_STATE: AppState = {
     startDate: "2025-01-01",
     startingBalance: 0,
     hoursPerMonth: 20,
+    accrualTierId: "10-plus",
     themeId: "company",
     fontId: "clean",
     types: DEFAULT_TYPES,
